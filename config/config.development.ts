@@ -4,10 +4,9 @@ export const config = {
     database: {
         dialect: "postgres" as Dialect,
         port: 5432,
-        host: "localhost",
+        host: process.env.PSQL_HOST || "localhost",
         username: "postgres",
         password: "password",
-        database: "geoexample",
         define: {
             timestamps: false,
         },
