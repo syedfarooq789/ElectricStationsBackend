@@ -1,0 +1,20 @@
+# THIS DOCKERFILE IS INTENDED FOR DEVELOPMENT ENVIRONMENTS
+# DO NOT USE THIS FOR PRODUCTION USAGES.
+
+version: "3.6"
+
+services:
+  pgDB:
+    image: postgis/postgis:13-3.1-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      ALLOW_EMPTY_PASSWORD: yes
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+
+volumes:
+  db_data:
