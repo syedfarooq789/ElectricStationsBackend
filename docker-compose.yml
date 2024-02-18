@@ -12,9 +12,21 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
+      DB_HOST: host.docker.internal
       ALLOW_EMPTY_PASSWORD: yes
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+
+  app:
+    depends_on:
+      - pgDB
+    build: ./
+    restart: unless-stopped
+    environment:
+      PSQL_HOST: pgDB
+      DB_HOST: host.docker.internal
+    ports:
+      - "3500:3500"
 
 volumes:
   db_data:
