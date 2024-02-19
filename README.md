@@ -68,7 +68,7 @@ For example in station module:
 For example in station:
 spec folder contains the e2e tests for station module
 services folder contain the unit tests for station service
-controller folder contain the unit tests for company controller
+controller folder contain the unit tests for station controller
 
 spec folder contains the e2e tests for company module
 services folder contain the unit tests for company service
