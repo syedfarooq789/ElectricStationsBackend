@@ -1,32 +1,40 @@
-# THIS DOCKERFILE IS INTENDED FOR DEVELOPMENT ENVIRONMENTS
-# DO NOT USE THIS FOR PRODUCTION USAGES.
-
 version: "3.6"
 
 services:
   pgDB:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
     image: postgis/postgis:13-3.1-alpine
     restart: always
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/dataßß
     environment:
-      DB_HOST: host.docker.internal
-      ALLOW_EMPTY_PASSWORD: yes
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: postgres
+      - DB_HOST= host.docker.internal
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
 
   app:
     depends_on:
-      - pgDB
+      pgDB:
+        condition: service_healthy
     build: ./
-    restart: unless-stopped
+    restart: always
     environment:
       PSQL_HOST: pgDB
       DB_HOST: host.docker.internal
+    entrypoint: docker/run-application.sh
     ports:
-      - "3500:3500"
+      - "3000:3000"
 
 volumes:
   db_data:
