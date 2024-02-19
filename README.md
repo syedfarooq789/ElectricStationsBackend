@@ -58,8 +58,19 @@ $ docker-compose up --build
 ## Test
 
 ```bash
-when you run the the above docker commands it will automatically run all the test cases
 
-<img width="872" alt="Screenshot 2024-02-19 at 21 12 10" src="https://github.com/syedfarooq789/ElectricStationsBackend/assets/35577818/a2540bf8-3288-46d2-959d-d9f195db97c4">
+Both e2e and unit tests are written for all the services and controllers used in the project.
 
+when you run the the above docker commands it will automatically run all the test cases.
+
+For example in station module:
+
+For example in station:
+spec folder contains the e2e tests for station module
+services folder contain the unit tests for station service
+controller folder contain the unit tests for company controller
+
+spec folder contains the e2e tests for company module
+services folder contain the unit tests for company service
+controller folder contain the unit tests for company controller
 ```
