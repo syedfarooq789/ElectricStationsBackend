@@ -63,8 +63,6 @@ Both e2e and unit tests are written for all the services and controllers used in
 
 when you run the the above docker commands it will automatically run all the test cases.
 
-For example in station module:
-
 For example in station:
 spec folder contains the e2e tests for station module
 services folder contain the unit tests for station service
