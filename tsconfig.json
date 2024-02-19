@@ -13,8 +13,9 @@
     "outDir": "./dist",
     "strictNullChecks": true,
     "noUnusedLocals": true,
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "types": ["jest", "node"]
   },
   "include": ["src/**/*", "auto.migrate.ts"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": ["node_modules"]
 }
