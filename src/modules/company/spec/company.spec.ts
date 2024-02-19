@@ -10,13 +10,37 @@ import {
     updateCompany,
     createCompany,
 } from "./test.data";
-
+import { Sequelize } from "sequelize-typescript";
+import { ConfigService } from "../../common/config";
+import { Company } from "../company.entity";
+import { Station } from "../../station/station.entity";
+import { getModelToken } from "@nestjs/sequelize";
 describe("/", () => {
     let app: INestApplication;
-
+    let sequelize: Sequelize;
+    const configRepository = {};
     beforeAll(async () => {
         const module = await Test.createTestingModule({
             imports: [ApplicationModule],
+            providers: [
+                {
+                    provide: "SEQUELIZE",
+                    useFactory: (configService: ConfigService) => {
+                        sequelize = new Sequelize(
+                            configService.sequelizeOrmConfig,
+                        );
+
+                        sequelize.addModels([Company, Station]);
+                        return sequelize;
+                    },
+                    inject: [ConfigService],
+                },
+                ConfigService,
+                {
+                    provide: getModelToken(ConfigService),
+                    useValue: configRepository,
+                },
+            ],
         }).compile();
         app = module.createNestApplication();
         app.useGlobalPipes(new ValidationPipe());
@@ -66,10 +90,10 @@ describe("/", () => {
         describe("GET /company", () => {
             it("it should return company id", async () => {
                 return request(app.getHttpServer())
-                    .get("/company/1")
+                    .get("/company/5000")
                     .expect(200)
                     .expect(({ body }) => {
-                        expect(body.companyId).toEqual(1);
+                        expect(body.companyId).toEqual(5000);
                     });
             });
 
@@ -85,14 +109,14 @@ describe("/", () => {
         describe("PUT /company", () => {
             it("update company data should return 400", () => {
                 return request(app.getHttpServer())
-                    .put("/company/1")
+                    .put("/company/5000")
                     .send(updateCompanyWrongStatus)
                     .expect(HttpStatus.BAD_REQUEST);
             });
 
             it("company data update should return 200", () => {
                 return request(app.getHttpServer())
-                    .put("/company/1")
+                    .put("/company/5000")
                     .send(updateCompany)
                     .expect((res) => {
                         expect(res.status).toEqual(200);
@@ -105,7 +129,7 @@ describe("/", () => {
         describe("DELETE /company", () => {
             it("delete company data should return 200", () => {
                 return request(app.getHttpServer())
-                    .delete("/company/5001")
+                    .delete("/company/5000")
                     .expect((res) => {
                         expect(res.status).toEqual(200);
                     });
@@ -127,7 +151,7 @@ describe("/", () => {
         describe("Get /stations/:companyId", () => {
             it("it should get stations with 200", () => {
                 return request(app.getHttpServer())
-                    .get("/company/stations/1")
+                    .get("/company/stations/5000")
                     .expect((res) => {
                         expect(res.status).toEqual(200);
                     });
