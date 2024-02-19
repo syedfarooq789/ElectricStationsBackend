@@ -12,7 +12,7 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/dataßß
     environment:
-      - DB_HOST= host.docker.internal
+      - DB_HOST=${POSTGRES_HOST}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
     env_file:
@@ -34,7 +34,7 @@ services:
       DB_HOST: host.docker.internal
     entrypoint: docker/run-application.sh
     ports:
-      - "3000:3000"
+      - "4000:4000"
 
 volumes:
   db_data:
