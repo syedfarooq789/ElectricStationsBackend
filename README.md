@@ -60,5 +60,6 @@ $ docker-compose up --build
 ```bash
 when you run the the above docker commands it will automatically run all the test cases
 
-![alt text](<Screenshot 2024-02-19 at 21.12.10.png>)
+<img width="872" alt="Screenshot 2024-02-19 at 21 12 10" src="https://github.com/syedfarooq789/ElectricStationsBackend/assets/35577818/a2540bf8-3288-46d2-959d-d9f195db97c4">
+
 ```
