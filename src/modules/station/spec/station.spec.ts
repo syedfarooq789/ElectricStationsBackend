@@ -30,7 +30,7 @@ describe("/", () => {
                     .expect(HttpStatus.FORBIDDEN);
             });
 
-            it("should return 200 if station is created", () => {
+            it("should return 201 if station is created", () => {
                 return request(app.getHttpServer())
                     .post("/station")
                     .send(createStation)
@@ -65,7 +65,7 @@ describe("/", () => {
 
                 it("station data update should return 200", () => {
                     return request(app.getHttpServer())
-                        .put("/station/5000")
+                        .put("/station/5001")
                         .send(updateStation)
                         .expect((res) => {
                             expect(res.status).toEqual(200);
@@ -79,7 +79,7 @@ describe("/", () => {
         describe("DELETE /station", () => {
             it("delete station data should return 200", () => {
                 return request(app.getHttpServer())
-                    .delete("/station/5000")
+                    .delete("/station/5001")
                     .expect((res) => {
                         expect(res.status).toEqual(200);
                     });
